@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class BSTree {
+public class BSTree implements Iterable<Pair<String, Integer>> {
     Node head = null;
 
     void insert(String key, Integer value) {
@@ -49,23 +50,39 @@ public class BSTree {
     }
 
     List<Pair<String, Integer>> getEntries() {
-        List<Node> pending = new ArrayList<>();
         List<Pair<String, Integer>> result = new ArrayList<>();
-        Node curr = head;
-        while (curr != null) {
-            pending.add(curr);
-            curr = curr.left;
+        for (Pair<String, Integer> pair : this) {
+            result.add(pair);
         }
-        while (!pending.isEmpty()) {
-            curr = pending.remove(pending.size() - 1);
-            result.add(Pair.of(curr.key, curr.value));
-            curr = curr.right;
+        return result;
+    }
+
+    public Iterator<Pair<String, Integer>> iterator() {
+        return new TreeIterator(head);
+    }
+
+    static class TreeIterator implements Iterator<Pair<String, Integer>> {
+        private final List<Node> pending = new ArrayList<>();
+
+        TreeIterator(Node head) {
+            addAllLeftToPending(head);
+        }
+
+        private void addAllLeftToPending(Node curr) {
             while (curr != null) {
                 pending.add(curr);
                 curr = curr.left;
             }
         }
 
-        return result;
+        public boolean hasNext() {
+            return !pending.isEmpty();
+        }
+
+        public Pair<String, Integer> next() {
+            Node node = pending.remove(pending.size() - 1);
+            addAllLeftToPending(node.right);
+            return Pair.of(node.key, node.value);
+        }
     }
 }
