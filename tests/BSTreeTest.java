@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class BSTreeTest {
 
@@ -18,6 +19,8 @@ public class BSTreeTest {
     public void testHead() {
         tree.insert("C", 5);
         assertEquals(Integer.valueOf(5), tree.getValue("C"));
+        assertNull(tree.getValue("A"));
+        assertNull(tree.getValue("D"));
     }
 
     @Test
@@ -26,6 +29,8 @@ public class BSTreeTest {
         tree.insert("A", 2);
         assertEquals(Integer.valueOf(5), tree.getValue("C"));
         assertEquals(Integer.valueOf(2), tree.getValue("A"));
+        assertNull(tree.getValue("B"));
+        assertNull(tree.getValue("D"));
     }
 
     @Test
@@ -34,6 +39,8 @@ public class BSTreeTest {
         tree.insert("C", 2);
         assertEquals(Integer.valueOf(5), tree.getValue("A"));
         assertEquals(Integer.valueOf(2), tree.getValue("C"));
+        assertNull(tree.getValue("B"));
+        assertNull(tree.getValue("D"));
     }
 
     @Test
@@ -44,6 +51,7 @@ public class BSTreeTest {
         assertEquals(Integer.valueOf(5), tree.getValue("C"));
         assertEquals(Integer.valueOf(2), tree.getValue("B"));
         assertEquals(Integer.valueOf(4), tree.getValue("A"));
+        assertNull(tree.getValue("D"));
     }
 
     @Test
@@ -54,6 +62,7 @@ public class BSTreeTest {
         assertEquals(Integer.valueOf(5), tree.getValue("A"));
         assertEquals(Integer.valueOf(2), tree.getValue("B"));
         assertEquals(Integer.valueOf(4), tree.getValue("C"));
+        assertNull(tree.getValue("D"));
     }
 
     @Test
@@ -64,6 +73,7 @@ public class BSTreeTest {
         assertEquals(Integer.valueOf(5), tree.getValue("C"));
         assertEquals(Integer.valueOf(2), tree.getValue("A"));
         assertEquals(Integer.valueOf(4), tree.getValue("B"));
+        assertNull(tree.getValue("D"));
     }
 
     @Test
@@ -74,6 +84,7 @@ public class BSTreeTest {
         assertEquals(Integer.valueOf(5), tree.getValue("A"));
         assertEquals(Integer.valueOf(2), tree.getValue("C"));
         assertEquals(Integer.valueOf(4), tree.getValue("B"));
+        assertNull(tree.getValue("D"));
     }
 
     @Test

@@ -8,45 +8,47 @@ public class BSTree implements Iterable<Pair<String, Integer>> {
     void insert(String key, Integer value) {
         if (head == null) {
             head = new Node(key, value);
-            return;
+        } else {
+            insert(head, key, value);
         }
-        Node curr = head;
-        while (true) {
-            int comp = curr.key.compareTo(key);
-            if (comp == 0) {
-                curr.value = value;
-                return;
-            }
-            if (comp < 0) {
-                if (curr.right == null) {
-                    curr.right = new Node(key, value);
-                    return;
-                } else {
-                    curr = curr.right;
-                }
+    }
+
+    void insert(Node node, String key, Integer value) {
+        int comp = node.key.compareTo(key);
+        if (comp == 0) {
+            node.value = value;
+        }
+        if (comp < 0) {
+            if (node.right == null) {
+                node.right = new Node(key, value);
             } else {
-                if (curr.left == null) {
-                    curr.left = new Node(key, value);
-                    return;
-                } else {
-                    curr = curr.left;
-                }
+                insert(node.right, key, value);
+            }
+        } else {
+            if (node.left == null) {
+                node.left = new Node(key, value);
+            } else {
+                insert(node.left, key, value);
             }
         }
     }
 
     Integer getValue(String key) {
-        Node curr = head;
-        while (curr != null) {
-            int comp = curr.key.compareTo(key);
-            if (comp == 0) return curr.value;
-            if (comp < 0) {
-                curr = curr.right;
-            } else {
-                curr = curr.left;
-            }
-        }
+        if (head != null) return getValue(head, key);
         return null;
+    }
+
+    Integer getValue(Node node, String key) {
+        int comp = node.key.compareTo(key);
+        if (comp == 0) return node.value;
+        if (comp < 0) {
+            if (node.right == null) return null;
+            return getValue(node.right, key);
+
+        } else {
+            if (node.left == null) return null;
+            return getValue(node.left, key);
+        }
     }
 
     List<Pair<String, Integer>> getEntries() {
